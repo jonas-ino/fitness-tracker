@@ -1,5 +1,7 @@
+EXTREMELY basic workout app skeleton: Basically just what I wish was in my ideal workout app.
+
 CHECKLIST
-- Timer [C]
+- Timer [✓]
 - Superset
 - Dumbbell/Barbell/Machine selection
 - Alternative exercise selection
