@@ -2,6 +2,9 @@ EXTREMELY basic workout app skeleton: Basically just what I wish was in my ideal
 
 CHECKLIST
 - Timer [✓]
+- New workout (file reading/editing)
+  - Name, sets, weights/prev, type (bodyweight, dumbbell, machine, barbell)
+- Menu
 - Superset
 - Dumbbell/Barbell/Machine selection
 - Alternative exercise selection
