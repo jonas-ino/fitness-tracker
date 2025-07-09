@@ -10,7 +10,6 @@ class Timer:
     # Time class (performance counter), updating outputs, etc.
     # Threads
     def __init__(self):
-        print("Timer started")
         self.start = 0
         self.end = 0
 
@@ -27,4 +26,5 @@ class Timer:
         except KeyboardInterrupt:
             self.end = time.perf_counter()
             print(f"\n{format_time(self.end - self.start)}")
+            # Change keyboard interrupt to something else. Return
             exit(0)
