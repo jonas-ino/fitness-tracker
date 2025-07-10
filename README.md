@@ -14,3 +14,4 @@ CHECKLIST
 
 TODO:
 - Figure out threads
+- argument to open a specific exercise .json file
