@@ -7,6 +7,11 @@ class FileManager:
 
     def read_file(self):
         print("TEST")
+        data = []
+
+        with open("exercises.json", "r") as file:
+            data = json.load(file)
+            return data
 
         # pref.json
         #   preferences = {
@@ -14,7 +19,7 @@ class FileManager:
         #   }
 
         # exercises.json
-        #   exercises = {
+        #   exercise = {
         #       "exercise": "name",
         #       "sets": "number",
         #       "reps": "number",
@@ -28,6 +33,6 @@ class FileManager:
         #       "sets": integer,
         #       "set_data": tuple(weight, prev_weight)
 
-    def save_file(self):
-        print("TEST")
-        #PLACEHOLDER
+    def write_file(self, exercise_list):
+        with open("exercises.json", "w") as file:
+            json.dump(exercise_list, file, indent=4)
