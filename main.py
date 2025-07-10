@@ -1,14 +1,12 @@
+from src.file_manager import FileManager
 from src.timer import Timer
-#from src.reader import Reader
-from src.exercise import Exercise
+from src.workout_manager import WorkoutManager
 
 if __name__ == "__main__":
     test_timer = Timer()
+    manager = WorkoutManager()
+    file_manager = FileManager()
 
-    test_exercise = Exercise("TEST")
-    test_exercise.set_sets(3)
-    test_exercise.set_reps(10)
-    test_exercise.set_weight(40)
+    manager.import_workout(file_manager.read_file())
 
-    print(f"{test_exercise.format_exercise()}")
-    test_exercise.print_exercise()
+    file_manager.write_file(manager.export_workout())
