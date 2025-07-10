@@ -31,4 +31,12 @@ class Exercise:
 
     def format_exercise(self):
         # for writing to file
-        return f"{self.name}:{self.sets}:{self.reps}:{self.weight}:{self.prev_weight}"
+        exercise = {
+            "name": self.name,
+            "sets": self.sets,
+            "reps": self.reps,
+            "weight": self.weight,
+            "prev_weight": self.prev_weight,
+            "rest_timer": self.rest_timer
+        }
+        return exercise
