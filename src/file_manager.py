@@ -9,6 +9,7 @@ class FileManager:
         print("TEST")
         data = []
 
+        print("Importing date from exercises.json")
         with open("exercises.json", "r") as file:
             data = json.load(file)
             return data
@@ -34,5 +35,6 @@ class FileManager:
         #       "set_data": tuple(weight, prev_weight)
 
     def write_file(self, exercise_list):
+        print("Writing data to exercises.json")
         with open("exercises.json", "w") as file:
             json.dump(exercise_list, file, indent=4)
