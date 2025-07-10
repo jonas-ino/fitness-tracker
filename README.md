@@ -2,8 +2,8 @@ EXTREMELY basic workout app skeleton: Basically just what I wish was in my ideal
 
 CHECKLIST
 - Timer [✓]
-- New workout (file reading/editing)
-  - Name, sets, weights/prev, type (bodyweight, dumbbell, machine, barbell)
+- New workout (file reading/editing) [✓]
+  - Name, sets, reps, weights/prev, ~~type (bodyweight, dumbbell, machine, barbell)~~ [✓]
 - Menu
 - Superset
 - Dumbbell/Barbell/Machine selection
@@ -11,6 +11,10 @@ CHECKLIST
 - Warmup Set
 - Add comment/add video
 - calculate workout time from start to final exercise
+
+
+IDEAS
+- During a set/exercise, pop out a new terminal with functioning stopwatch/timers
 
 TODO:
 - Figure out threads
