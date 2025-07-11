@@ -26,8 +26,8 @@ class Exercise:
     def set_rest_timer(self, rest_timer):
         self.rest_timer = rest_timer
 
-    def print_exercise(self):
-        print(f"{self.name}: {self.sets}x{self.reps} ({self.weight}kg)")
+    def display_exercise(self):
+        return(f"{self.name}: {self.sets}x{self.reps} ({self.weight}kg)")
 
     def format_exercise(self):
         # for writing to file
