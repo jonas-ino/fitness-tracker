@@ -1,5 +1,28 @@
 EXTREMELY basic workout app skeleton: Basically just what I wish was in my ideal workout app.
 
+--- USER FLOW ---
+
+OPEN -> [New exercise/Load from file]
+WHILE TRUE: Q TO CANCEL (+ confirmation)
+
+[New Exercise]
+- Exercise name
+- Menu (add, remove, edit, etc.)
+
+[Load from file]
+- Enter name:
+- search
+- found/notfound (if not found, repeat)
+
+[BEGIN WORKOUT]
+- Start stopwatch (thread) -> Stopwatch on top
+- List exercises -> Next / Select (from incomplete) / Finish Workout
+
+[CURRENT EXERCISE]
+- CURRENT SET: next (Start new timer), skip, edit (weight/reps)
+- ADD SET
+
+
 CHECKLIST
 - Timer [✓]
 - New workout (file reading/editing) [✓]
