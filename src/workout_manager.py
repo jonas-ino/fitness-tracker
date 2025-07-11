@@ -1,4 +1,5 @@
 from src.exercise import Exercise
+from src.timer import Timer
 
 class WorkoutManager:
     def __init__(self):
@@ -46,10 +47,14 @@ class WorkoutManager:
             print("No exercises.")
             return
         for i, exercise in enumerate(self.exercises):
-            print(f"{i}: {exercise.name}")
+            print(f"{i}: {exercise.display_exercise()}")
 
     # modify exercise??
     #
+
+    def start_workout(self):
+        timer = Timer()
+        timer.countdown(int(input("Duration: ")))
 
     def import_workout(self, data):
         self.clear_exercises()

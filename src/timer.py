@@ -1,4 +1,5 @@
 import time
+import math
 
 def format_time(seconds):
     second, millisecond = divmod(int(seconds * 1000), 1000)
@@ -28,3 +29,11 @@ class Timer:
             print(f"\n{format_time(self.end - self.start)}")
             # Change keyboard interrupt to something else. Return
             exit(0)
+
+    def countdown(self, duration):
+        self.start = time.perf_counter()
+        while time.perf_counter() - self.start < duration:
+            time.sleep(.01)
+            self.tick()
+        self.end = time.perf_counter()
+        print(f"{format_time(math.floor(self.end - self.start))}", end='\r', flush=True)

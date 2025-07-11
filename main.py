@@ -29,12 +29,11 @@ def view_workout(wm):
 def clear_workout(wm):
     wm.clear_exercises()
 
-def stopwatch(timer):
+def stopwatch(wm):
     # TODO: Implement stopwatch interaction
-    timer.run()
+    wm.start_workout()
 
 if __name__ == "__main__":
-    timer = Timer()
     manager = WorkoutManager()
     file_manager = FileManager()
 
@@ -54,7 +53,7 @@ if __name__ == "__main__":
         elif option == "4":
             clear_workout(manager)
         elif option == "5":
-            stopwatch(timer)
+            stopwatch(manager)
         elif option == "6":
             print("Exiting.")
             break
