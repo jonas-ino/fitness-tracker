@@ -1,4 +1,5 @@
 import json
+import os
 
 class FileManager:
     def __init__(self):
@@ -10,6 +11,7 @@ class FileManager:
         data = []
 
         print("Importing date from exercises.json")
+        # TODO: SAVE FOLDER LOCATION TO PREFS.JSON
         with open("exercises.json", "r") as file:
             data = json.load(file)
             return data
