@@ -35,27 +35,27 @@ def verify_folder(folder_path):
     else:
         return False
 
-# def verify_workout(workout_name, folder_path):
-#     if verify_folder(folder_path):
-#         if os.path.exists(folder_path + "/" + workout_name + ".json"):
-#             return True
-#     return False
-#
-# def list_workouts(folder_path):
-#     workout_list = []
-#     if verify_folder(folder_path):
-#         for file in os.listdir(folder_path):
-#             if file.endswith(".json"):
-#                 workout_list.append(file)
-#     return workout_list
-#
-# def read_workout(workout_name, folder_path):
-#     if verify_workout(workout_name, folder_path):
-#         with open(folder_path + "/" + workout_name + ".json", "r") as file:
-#             return json.load(file)
-#     else:
-#         print("File not found. Exiting.")
-#         return None
+def verify_workout(workout_name, folder_path):
+    if verify_folder(folder_path):
+        if os.path.exists(folder_path + "/" + workout_name + ".json"):
+            return True
+    return False
+
+def list_workouts(folder_path):
+    workout_list = []
+    if verify_folder(folder_path):
+        for file in os.listdir(folder_path):
+            if file.endswith(".json"):
+                workout_list.append(file)
+    return workout_list
+
+def read_workout(workout_name, folder_path):
+    if verify_workout(workout_name, folder_path):
+        with open(folder_path + "/" + workout_name + ".json", "r") as file:
+            return json.load(file)
+    else:
+        print("File not found. Exiting.")
+        return None
 # --------------------------------------------------------------------------------
 
 
