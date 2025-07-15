@@ -76,3 +76,51 @@ if __name__ == "__main__":
     #         print("Invalid option.")
     #
     # file_manager.write_file(workout_manager.export_workout())
+
+    import os
+    import tkinter as tk
+    from tkinter import filedialog
+    import json
+
+    from src.file_manager import FileManager
+    from src.workout_manager import WorkoutManager
+
+
+    def load_folder():
+        # TODO: DEFAULT FOLDER IS %/WORKOUTS
+        root = tk.Tk()
+        root.withdraw()
+
+        while True:
+            selection = input("[1] Select folder\n[2] Exit\nSelection: ")
+            if selection == "1":
+                folder_path = filedialog.askdirectory(title="Select exercise folder")
+                if folder_path:
+                    print("Selected folder: " + folder_path)
+                    return folder_path
+                else:
+                    print("No folder selected.")
+            elif selection == "2":
+                "Exiting."
+                exit(0)
+            else:
+                print("Invalid option.")
+
+
+    if __name__ == "__main__":
+        print("TEST")
+
+        wm = WorkoutManager()
+        fm = FileManager()
+        folder_path = load_folder()
+
+        settings = {
+            "folder_path": folder_path,
+            "default_rest": 30
+        }
+        with open("settings.json", "w") as file:
+            json.dump(settings, file, indent=4)
+
+    # settings.json
+    # default_folder : %/workouts
+    # default_rest : 30

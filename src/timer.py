@@ -40,3 +40,5 @@ class Timer:
             self.tick()
         self.end = time.perf_counter()
         print(f"{format_time(math.floor(self.end - self.start))}", end='\r', flush=True)
+        # PLACEHOLDER SOUND
+        print("\a")

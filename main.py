@@ -1,4 +1,3 @@
-import os
 import tkinter as tk
 from tkinter import filedialog
 
@@ -23,13 +22,33 @@ def load_settings():
             temp_settings["folder path"] = new_path
     return temp_settings
 
-def list_workouts(folder_path):
-    # If workouts exist in the specified folder, prints out each entry, stripping off the .json extension, starting at 1
+def get_workouts(folder_path):
     # TODO: Add additional folder check maybe?
-    wo_list = fm.list_workouts(folder_path)
+    # CAN MAYBE COMBINE WITH LIST WORKOUTS DEPENDING ON WORKFLOW
+    return fm.list_workouts(folder_path)
 
+def list_workouts(wo_list):
+    # If workouts exist in the specified folder, prints out each entry, stripping off the .json extension, starting at 1
     for index, wo in enumerate(wo_list):
         print(str(index + 1) + ": " + wo[:-5])
+
+def select_workout():
+    # Reminder: you can declare variables within while/for loops and use them afterwards in python
+    while True:
+        wo_index = input("Select a workout to import ('Q' to exit): ")
+        if wo_index == "Q":
+            print("Exiting.")
+            exit(0)
+        elif wo_index.isnumeric():
+            wo_index = int(wo_index) - 1
+            if 0 <= wo_index < len(workouts):
+                break
+            else:
+                print("Selection out of range. Try again.")
+        else:
+            print("Invalid selection.")
+    selected_wo = workouts[wo_index]
+    return selected_wo
 
 
 if __name__ == "__main__":
@@ -37,47 +56,31 @@ if __name__ == "__main__":
     wm = WorkoutManager()
     settings = load_settings()
     path = settings["folder path"]
+    workouts = []
 
-    print("TEST - READING SETTINGS")
+    print("\nTEST - READING SETTINGS")
     for key in settings:
         print(key + ": " + str(settings[key]))
 
-    print("\n\nTEST - LISTING WORKOUTS")
-    list_workouts(path)
-
-    print("\n\nTEST - IMPORTING WORKOUT")
-    selected_workout = input("Select a workout to import ('Q' to exit): ")
-    while True:
-        if selected_workout == "Q":
-            print("Exiting Program.")
-            exit(0)
-        elif (not selected_workout.isdigit()
-        or int(selected_workout) < 1
-        or int(selected_workout) > len(fm.list_workouts(path))):
-            print("Invalid selection.")
-        else:
-            selected_workout = int(selected_workout) - 1
-            try:
-                fm.read_workout(fm.list_workouts(path)[selected_workout], path)
-            except IndexError:
-                print("Invalid selection.")
-
-
-
-    fm.read_workout("test", path)
+    print("\nTEST - IMPORTING WORKOUTS")
+    workouts = get_workouts(path)
+    list_workouts(workouts)
+    choice = select_workout()
+    curr_workout = fm.read_workout(choice, path)
+    print("\nSelected workout: " + choice)
 
     fm.write_settings(settings)
+    wm.import_workout(curr_workout)
 
-
-# LOAD SETTINGS (if exists)
+# LOAD SETTINGS (if exists) [✓]
 #   [Y] Load settings based on defaults
 #   [N] Setup default settings
 
-# CHECK FOLDER
+# CHECK FOLDER [✓]
 #   [Y] cont.
 #   [N] Setup folder
 
-# CHECK FOLDER FOR WORKOUTS
+# CHECK FOLDER FOR WORKOUTS [✓ PARTIAL]
 #   [Y] Load/New
 #   [N] New workout
 

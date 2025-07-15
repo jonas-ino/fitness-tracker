@@ -1,6 +1,10 @@
 import json
 import os
 
+# TODO: CHANGE BACK TO OBJECT WITH VARIABLES:
+#   FOLDER LOCATION
+#   CURRENT WORKOUT NAME
+#   Settings?
 # SETTINGS -----------------------------------------------------------------------
 def default_settings():
     settings = {
@@ -36,8 +40,9 @@ def verify_folder(folder_path):
         return False
 
 def verify_workout(workout_name, folder_path):
+    # TODO: Fix error case: .json file is present, but empty
     if verify_folder(folder_path):
-        if os.path.exists(folder_path + "/" + workout_name + ".json"):
+        if os.path.exists(folder_path + "/" + workout_name):
             return True
     return False
 
@@ -49,72 +54,32 @@ def list_workouts(folder_path):
                 workout_list.append(file)
     return workout_list
 
-def read_workout(workout_name, folder_path):
-    if verify_workout(workout_name, folder_path):
-        with open(folder_path + "/" + workout_name + ".json", "r") as file:
-            return json.load(file)
+def read_workout(file_name, folder_path):
+    if verify_workout(file_name, folder_path):
+        with open(folder_path + "/" + file_name, "r") as file:
+            workout = json.load(file)
+            return workout
     else:
-        print("File not found. Exiting.")
+        print(f"{folder_path}/{file_name} not found.")
         return None
+
+def write_workout(file_name, folder_path, workout):
+    with open(folder_path + "/" + file_name, "w") as file:
+        json.dump(workout, file, indent=4)
 # --------------------------------------------------------------------------------
 
+    # exercises.json
+    #   exercise = {
+    #       "exercise": "name",
+    #       "sets": "number",
+    #       "reps": "number",
+    #       "weight": "number"
+    #       "prev_weight": "number"
+    #   }
 
+    # ADVANCED
+    #   exercises = {
+    #       "exercise": "name",
+    #       "sets": integer,
+    #       "set_data": tuple(weight, prev_weight)
 
-
-
-
-
-
-
-# class FileManager:
-#     def __init__(self):
-#         self.exercises = []
-#         self.settings = []
-#
-#     def read_exercises(self):
-#         print("Importing data from exercises.json")
-#         with open("exercises.json", "r") as file:
-#             self.exercises = json.load(file)
-#             return self.exercises
-#
-#         # exercises.json
-#         #   exercise = {
-#         #       "exercise": "name",
-#         #       "sets": "number",
-#         #       "reps": "number",
-#         #       "weight": "number"
-#         #       "prev_weight": "number"
-#         #   }
-#
-#         # ADVANCED
-#         #   exercises = {
-#         #       "exercise": "name",
-#         #       "sets": integer,
-#         #       "set_data": tuple(weight, prev_weight)
-#
-#     def write_exercises(self):
-#         print("Writing data to exercises.json")
-#         with open("exercises.json", "w") as file:
-#             json.dump(self.exercises, file, indent=4)
-#
-#     def read_settings(self):
-#         print("Importing settings from settings.json")
-#         with open("settings.json", "r") as file:
-#             self.settings = json.load(file)
-#             return self.settings
-#
-#         # settings.json
-#         #   settings = {
-#         #       "folder_path" : string
-#         #       "default_rest" : int
-#
-#     def write_settings(self):
-#         print("Writing data to exercises.json")
-#         with open("settings.json", "w") as file:
-#             json.dump(self.settings, file, indent=4)
-#
-#     def validate_exercises(self):
-#         return True
-#
-#     def validate_settings(self):
-#         return True
