@@ -8,4 +8,5 @@ __pycache__/
 .idea/
 
 exercises.json
+settings.json
 prefs.json
