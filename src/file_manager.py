@@ -4,8 +4,8 @@ import os
 # SETTINGS -----------------------------------------------------------------------
 def default_settings():
     settings = {
-        "folder path" : "",
-        "default rest" : 30
+        "folder_path" : "",
+        "default_rest" : 30
     }
     return settings
 def read_settings():

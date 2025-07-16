@@ -11,15 +11,15 @@ def get_path(msg):
 
 def load_settings():
     temp_settings = fm.read_settings()
-    if temp_settings["folder path"] == "":
+    if temp_settings["folder_path"] == "":
         print("No folder path found. Select new location.")
         new_path = get_path("New folder path")
-        temp_settings["folder path"] = new_path
+        temp_settings["folder_path"] = new_path
     else:
-        if not fm.verify_folder(temp_settings["folder path"]):
+        if not fm.verify_folder(temp_settings["folder_path"]):
             print("Invalid folder path detected. Select new location.")
             new_path = get_path("Select new folder path")
-            temp_settings["folder path"] = new_path
+            temp_settings["folder_path"] = new_path
     return temp_settings
 
 def load_workout(folder_path, wm):
@@ -56,8 +56,6 @@ def load_workout(folder_path, wm):
                 print("Invalid selection.")
         else:
             print("Invalid selection.")
-
-
 
 def save_workout(folder_path, wm):
     print("TEMP")
