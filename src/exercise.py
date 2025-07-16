@@ -1,42 +1,85 @@
+# exercise = {
+#   "exercise_name": string,
+#   "rest_timer": int,
+#   "set_data": [{
+#       "weight": int,
+#       "prev_weight": int
+#   }]
+
 class Exercise:
-    def __init__(self, name):
+    def __init__(self, name, rest_timer):
         self.name = name
-        self.sets = 0
-        self.reps = 0
-        self.weight = 0
-        self.prev_weight = 0
-        self.rest_timer = 30
-
-        # self.sets = []
-        # GOAL: allow modular set changes
-
-    def set_name(self, name):
-        self.name = name
-
-    def set_sets(self, sets):
-        self.sets = sets
-
-    def set_reps(self, reps):
-        self.reps = reps
-
-    def set_weight(self, weight):
-        self.prev_weight = self.weight
-        self.weight = weight
-
-    def set_rest_timer(self, rest_timer):
         self.rest_timer = rest_timer
+        self.set_data = [{}]
 
-    def display_exercise(self):
-        return(f"{self.name}: {self.sets}x{self.reps} ({self.weight}kg)")
+    def add_set(self, weight):
+        new_set = {
+            "weight": weight,
+            "prev_weight": 0
+        }
+        self.set_data.append(new_set)
+
+    def remove_set(self, index):
+        if not self.set_data:
+            print("ERROR: No sets found")      #DEBUG
+            return False
+        try:
+            self.set_data.pop(index)
+            return True
+        except IndexError:
+            print("ERROR: Invalid index")                               #DEBUG
+            return False
+
+    def set_weight(self, index, weight):
+        # SHOULD NOT UPDATE PREVIOUS WEIGHT. THIS WILL BE HANDLED BY THE WORKOUT MANAGER WHEN IT LOADS A NEW WORKOUT
+        if not self.set_data:
+            print("ERROR: No sets found")
+            return False
+        try:
+            self.set_data[index]["weight"] = weight
+            return True
+        except IndexError:
+            print("ERROR: Invalid index")
+            return False
+
+    def print_exercise(self):
+        # Returns a string representation of the workout (name, sets, rest timer)
+        #   "Bench Press : 3 x 10kg : 30s Rest
+        #   "Bench Press : 3 x [variable] : 30s Rest
+        output = ""
+        output += self.name + " : "
+        num_sets = len(self.set_data)
+        if num_sets <= 0:
+            output += "no sets"
+            return output
+        output += str(num_sets) + " x "
+
+        # Determine whether exercise has one or multiple weights
+        weights = []
+
+        variable_weights = False
+        for s in self.set_data:
+            weights.append(s["weight"])
+        if len(weights) > 1:
+            variable_weights = True
+
+        if variable_weights:
+            output += "["
+            for weight in weights:
+                output += str(weight) + ", "
+            output += "] + : "
+        else:
+            output += str(weights[0]) + " : "
+
+        output += str(self.rest_timer)
+        return output
 
     def format_exercise(self):
         # for writing to file
         exercise = {
             "name": self.name,
-            "sets": self.sets,
-            "reps": self.reps,
-            "weight": self.weight,
-            "prev_weight": self.prev_weight,
-            "rest_timer": self.rest_timer
+            "rest_timer": self.rest_timer,
+            "set_data": self.set_data
         }
         return exercise
+
