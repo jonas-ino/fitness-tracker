@@ -1,10 +1,6 @@
 import json
 import os
 
-# TODO: CHANGE BACK TO OBJECT WITH VARIABLES:
-#   FOLDER LOCATION
-#   CURRENT WORKOUT NAME
-#   Settings?
 # SETTINGS -----------------------------------------------------------------------
 def default_settings():
     settings = {
@@ -69,19 +65,3 @@ def write_workout(file_name, folder_path, workout):
     with open(folder_path + "/" + file_name, "w") as file:
         json.dump(workout, file, indent=4)
 # --------------------------------------------------------------------------------
-
-    # exercises.json
-    #   exercise = {
-    #       "exercise": "name",
-    #       "sets": "number",
-    #       "reps": "number",
-    #       "weight": "number"
-    #       "prev_weight": "number"
-    #   }
-
-    # ADVANCED
-    #   exercises = {
-    #       "exercise": "name",
-    #       "sets": integer,
-    #       "set_data": tuple(weight, prev_weight)
-
