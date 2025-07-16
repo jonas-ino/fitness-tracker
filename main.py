@@ -3,6 +3,8 @@ import src.file_manager as fm
 import src.menu as menu
 from src.workout_manager import WorkoutManager
 
+import json
+
 if __name__ == "__main__":
 
     wm = WorkoutManager()
@@ -34,6 +36,14 @@ if __name__ == "__main__":
     print(f"{wm.name}")
     for exercise in wm.exercises:
         print(f"{exercise.print_exercise()}")
+
+    with open("testExercises.json", "w") as file:
+        json.dump(wm.export_workout(), file, indent=4)
+
+
+            #
+            # with open("settings.json", "w") as file:
+            #     json.dump(settings, file, indent=4)
 
     fm.write_settings(settings)
 

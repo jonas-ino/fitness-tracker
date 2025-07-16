@@ -3,7 +3,7 @@ from src.timer import Timer
 
 # workout.json
 #   workout = {
-#       "workout name": String
+#       "workout_name": String
 #       "exercises" = [{
 #          "exercise_name": string,
 #          "rest_timer": int,
@@ -63,4 +63,12 @@ class WorkoutManager:
     # def import_workout(self, data):
     #
     #
-    # def export_workout(self):
+    def export_workout(self):
+        formatted_exercises = []
+        for exercise in self.exercises:
+            formatted_exercises.append(exercise.format_exercise())
+        data = {
+            "workout_name": self.name,
+            "exercises": formatted_exercises
+        }
+        return data
