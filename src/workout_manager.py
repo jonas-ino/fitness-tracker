@@ -1,74 +1,66 @@
 from src.exercise import Exercise
 from src.timer import Timer
 
+# workout.json
+#   workout = {
+#       "workout name": String
+#       "exercises" = [{
+#          "exercise_name": string,
+#          "rest_timer": int,
+#          "set_data": [{
+#              "weight": int,
+#              "prev_weight": int
+#          }]
+#       }]
+
 class WorkoutManager:
     def __init__(self):
         self.name = ""
         self.exercises = []
 
-    def add_exercise(self):
-        # This should all be handled by the menu class
-        print("Name: ")
-        name = input()
-        exercise = Exercise(name)
-        print("Sets: ")
-        exercise.set_sets(input())
-        # ADD ERROR HANDLING
-        print("Reps: ")
-        exercise.set_reps(input())
-        # ADD ERROR HANDLING
-        print("Weight: ")
-        exercise.set_weight(input())
-        # ADD ERROR HANDLING
-
-        self.exercises.append(exercise)
-
-    def remove_exercise(self):
-        if not self.exercises:
-            print("No exercises.")
-            return
-        self.list_exercises()
-        print("REMOVE EXERCISE ('-1' to cancel): ")
-        choice = int(input())
-        # FIX: if 'choice' is not integer
-        if choice != '-1':
-            try:
-                self.exercises.pop(choice)
-            except IndexError:
-                print("Invalid index.")
-
-    # def overwrite_exercise(self, index, exercise):
-    #     self.exercises[index] = exercise
-
     def clear_workout(self):
         self.exercises.clear()
 
+    def new_workout(self):
+        self.name = ""
+        self.clear_workout()
+
+    def add_exercise(self, name, rest_timer):
+        new_exercise = Exercise(name, rest_timer)
+        self.exercises.append(new_exercise)
+
+    def remove_exercise(self, index):
+        if not self.exercises:
+            print("ERROR: Cannot remove an exercise from an empty workout")         #DEBUG
+            return False
+        if 0 <= index < len(self.exercises):
+            try:
+                self.exercises.pop(index)
+                return True
+            except IndexError:
+                print("Invalid index.")                                             #DEBUG
+        return False
+
     def list_exercises(self):
+        # CAN MAYBE BE REPLACED WITH A MENU FUNCTION
         if not self.exercises:
             print("No exercises.")
             return
         for i, exercise in enumerate(self.exercises):
             print(f"{i}: {exercise.display_exercise()}")
 
-    # modify exercise??
+    def get_exercise(self, index):
+        # CAN MAYBE BE REPLACED WITH A MENU FUNCTION
+        try:
+            return self.exercises[index]
+        except IndexError:
+            print("Invalid index.")
+            return None
+
+    # def start_workout(self):
     #
-
-    def start_workout(self):
-        timer = Timer()
-        timer.countdown(int(input("Duration: ")))
-
-    def import_workout(self, data):
-        self.clear_workout()
-        for ex in data:
-            temp = Exercise(ex["name"])
-            temp.set_sets(ex["sets"])
-            temp.set_reps(ex["reps"])
-            temp.set_weight(ex["weight"])
-            self.exercises.append(temp)
-        self.list_exercises()
-
-    def export_workout(self):
-        export = []
-        for exercise in self.exercises:
-            export.append(exercise.format_exercise())
-        return export
+    #
+    # def import_workout(self, data):
+    #
+    #
+    # def export_workout(self):
