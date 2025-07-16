@@ -3,6 +3,7 @@ from src.timer import Timer
 
 class WorkoutManager:
     def __init__(self):
+        self.name = ""
         self.exercises = []
 
     def add_exercise(self):
@@ -39,7 +40,7 @@ class WorkoutManager:
     # def overwrite_exercise(self, index, exercise):
     #     self.exercises[index] = exercise
 
-    def clear_exercises(self):
+    def clear_workout(self):
         self.exercises.clear()
 
     def list_exercises(self):
@@ -57,7 +58,7 @@ class WorkoutManager:
         timer.countdown(int(input("Duration: ")))
 
     def import_workout(self, data):
-        self.clear_exercises()
+        self.clear_workout()
         for ex in data:
             temp = Exercise(ex["name"])
             temp.set_sets(ex["sets"])

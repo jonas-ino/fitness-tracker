@@ -42,11 +42,13 @@ def verify_folder(folder_path):
 def verify_workout(workout_name, folder_path):
     # TODO: Fix error case: .json file is present, but empty
     if verify_folder(folder_path):
-        if os.path.exists(folder_path + "/" + workout_name):
+        file_path = folder_path + "/" + workout_name
+        if os.path.exists(file_path):
             return True
+    print("ERROR: WORKOUT NOT FOUND [file_manager.verify_workout]")     #DEBUG
     return False
 
-def list_workouts(folder_path):
+def get_workout_list(folder_path):
     workout_list = []
     if verify_folder(folder_path):
         for file in os.listdir(folder_path):
