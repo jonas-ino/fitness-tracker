@@ -1,3 +1,5 @@
+from typing import List, TypedDict
+
 # exercise = {
 #   "exercise_name": string,
 #   "rest_timer": int,
@@ -5,7 +7,6 @@
 #       "weight": int,
 #       "prev_weight": int
 #   }]
-from typing import List, TypedDict
 
 class SetEntry(TypedDict):
     weight: int
