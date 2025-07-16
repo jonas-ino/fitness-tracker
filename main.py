@@ -4,6 +4,8 @@ import src.menu as menu
 from src.workout_manager import WorkoutManager
 from src.exercise import Exercise
 
+import json
+
 if __name__ == "__main__":
 
     wm = WorkoutManager()
@@ -56,11 +58,10 @@ if __name__ == "__main__":
     test.set_weight(0, 100)
     print(f"{test.print_exercise()}")
 
+    with open("test.json", "w") as file:
+        json.dump(test.format_exercise(), file, indent=4)
+
     print("\nEND\n\n\n")
-
-
-
-
 
     fm.write_settings(settings)
 
