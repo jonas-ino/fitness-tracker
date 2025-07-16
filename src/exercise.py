@@ -5,12 +5,17 @@
 #       "weight": int,
 #       "prev_weight": int
 #   }]
+from typing import List, TypedDict
+
+class SetEntry(TypedDict):
+    weight: int
+    prev_weight: int
 
 class Exercise:
     def __init__(self, name, rest_timer):
         self.name = name
         self.rest_timer = rest_timer
-        self.set_data = [{}]
+        self.set_data: List[SetEntry] = []
 
     def add_set(self, weight):
         new_set = {
@@ -52,26 +57,29 @@ class Exercise:
         if num_sets <= 0:
             output += "no sets"
             return output
-        output += str(num_sets) + " x "
+        output += str(num_sets) + "x"
 
         # Determine whether exercise has one or multiple weights
         weights = []
 
         variable_weights = False
         for s in self.set_data:
-            weights.append(s["weight"])
+            if s["weight"] not in weights:
+                weights.append(s["weight"])
         if len(weights) > 1:
             variable_weights = True
 
         if variable_weights:
             output += "["
-            for weight in weights:
-                output += str(weight) + ", "
-            output += "] + : "
+            for i, weight in enumerate(weights):
+                output += str(weight) + "kg"
+                if i != len(weights) - 1:
+                    output += ", "
+            output += "] : "
         else:
-            output += str(weights[0]) + " : "
+            output += str(weights[0]) + "kg : "
 
-        output += str(self.rest_timer)
+        output += str(self.rest_timer) + "sec"
         return output
 
     def format_exercise(self):
