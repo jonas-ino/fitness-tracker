@@ -2,9 +2,6 @@ import time
 import src.file_manager as fm
 import src.menu as menu
 from src.workout_manager import WorkoutManager
-from src.exercise import Exercise
-
-import json
 
 if __name__ == "__main__":
 
@@ -15,53 +12,28 @@ if __name__ == "__main__":
     time.sleep(0.2)
 
     settings = menu.load_settings()
-    path = settings["folder path"]
+    path = settings["folder_path"]
 
     #menu.load_workout(path, wm)
+    default_rest = settings["default_rest"]
+    wm.new_workout()
+    wm.name = "TEST WORKOUT"
 
-    test = Exercise("TEST EXERCISE", 30)
-    print(f"{test.print_exercise()}")
+    wm.add_exercise("test1", default_rest)
+    wm.exercises[0].add_set(10)
+    wm.exercises[0].add_set(20)
 
-    print("\nADD SET")
-    test.add_set(10)
-    print(f"{test.print_exercise()}")
+    wm.add_exercise("test2", default_rest)
+    wm.exercises[1].add_set(10)
+    wm.exercises[1].add_set(20)
 
-    print("\nADD SET")
-    test.add_set(10)
-    print(f"{test.print_exercise()}")
+    wm.add_exercise("test3", default_rest)
+    wm.exercises[2].add_set(10)
+    wm.exercises[2].add_set(20)
 
-    print("\nADD SET")
-    test.add_set(10)
-    print(f"{test.print_exercise()}")
-
-    print("\nADD SET")
-    test.add_set(11)
-    print(f"{test.print_exercise()}")
-
-    print("\nREMOVE INVALID SET")
-    test.remove_set(10)
-    print(f"{test.print_exercise()}")
-
-    print("\nREMOVE SET")
-    test.remove_set(0)
-    print(f"{test.print_exercise()}")
-
-    print("\nREMOVE SET")
-    test.remove_set(2)
-    print(f"{test.print_exercise()}")
-
-    print("\nEDIT SET WITH INVALID INDEX")
-    test.set_weight(10, 100)
-    print(f"{test.print_exercise()}")
-
-    print("\nEDIT SET")
-    test.set_weight(0, 100)
-    print(f"{test.print_exercise()}")
-
-    with open("test.json", "w") as file:
-        json.dump(test.format_exercise(), file, indent=4)
-
-    print("\nEND\n\n\n")
+    print(f"{wm.name}")
+    for exercise in wm.exercises:
+        print(f"{exercise.print_exercise()}")
 
     fm.write_settings(settings)
 
