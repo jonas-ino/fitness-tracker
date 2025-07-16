@@ -2,6 +2,7 @@ import time
 import src.file_manager as fm
 import src.menu as menu
 from src.workout_manager import WorkoutManager
+from src.exercise import Exercise
 
 if __name__ == "__main__":
 
@@ -14,9 +15,48 @@ if __name__ == "__main__":
     settings = menu.load_settings()
     path = settings["folder path"]
 
-    menu.load_workout(path, wm)
+    #menu.load_workout(path, wm)
 
+    test = Exercise("TEST EXERCISE", 30)
+    print(f"{test.print_exercise()}")
 
+    print("\nADD SET")
+    test.add_set(10)
+    print(f"{test.print_exercise()}")
+
+    print("\nADD SET")
+    test.add_set(10)
+    print(f"{test.print_exercise()}")
+
+    print("\nADD SET")
+    test.add_set(10)
+    print(f"{test.print_exercise()}")
+
+    print("\nADD SET")
+    test.add_set(11)
+    print(f"{test.print_exercise()}")
+
+    print("\nREMOVE INVALID SET")
+    test.remove_set(10)
+    print(f"{test.print_exercise()}")
+
+    print("\nREMOVE SET")
+    test.remove_set(0)
+    print(f"{test.print_exercise()}")
+
+    print("\nREMOVE SET")
+    test.remove_set(2)
+    print(f"{test.print_exercise()}")
+
+    print("\nEDIT SET WITH INVALID INDEX")
+    test.set_weight(10, 100)
+    print(f"{test.print_exercise()}")
+
+    print("\nEDIT SET")
+    test.set_weight(0, 100)
+    print(f"{test.print_exercise()}")
+
+    print("\nEND\n\n\n")
 
 
 
