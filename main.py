@@ -23,14 +23,7 @@ if __name__ == "__main__":
 
     menu.print_workout(wm)
 
-
-    with open("testExercises.json", "w") as file:
-        json.dump(wm.export_workout(), file, indent=4)
-
-
-            #
-            # with open("settings.json", "w") as file:
-            #     json.dump(settings, file, indent=4)
+    menu.save_workout(path, wm)
 
     fm.write_settings(settings)
 

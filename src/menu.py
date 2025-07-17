@@ -57,7 +57,15 @@ def load_workout(folder_path, wm):
             print("Invalid selection.")
 
 def save_workout(folder_path, wm):
-    print("TEMP")
+    print("DEBUG: SAVING WORKOUT")
+    workout_name = wm.name
+    #TODO: Change spaces in workout_name to underscores
+    if workout_name == "" or workout_name is None:
+        workout_name = "untitled"
+        wm.name = workout_name
+    workout_name += ".json"
+    formatted_workout = wm.export_workout()
+    fm.write_workout(workout_name, folder_path, formatted_workout)
 
 
 # UI OPTIONS ---------------------------------------------------
