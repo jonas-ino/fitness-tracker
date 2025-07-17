@@ -4,6 +4,7 @@ from tkinter import filedialog
 import src.file_manager as fm
 from src.workout_manager import WorkoutManager
 
+# SETUP ----------------------------------------------------------------------
 def get_path(msg):
     root = tk.Tk()
     root.withdraw()
@@ -21,12 +22,77 @@ def load_settings():
             new_path = get_path("Select new folder path")
             temp_settings["folder_path"] = new_path
     return temp_settings
+# ----------------------------------------------------------------------------------
 
+# UI OPTIONS ---------------------------------------------------
+def display_options(wm):
+    print("Active workout: ", end="")
+    if not wm.loaded:
+        print("None")
+    else:
+        print(f"{wm.name}")
+
+    print("[1] New workout")
+    print("[2] Load workout")
+    print("[3] Save workout")
+    print("[4] Settings")
+    print("[5] Exit")
+
+def print_workout(wm):
+    if not wm.loaded:
+        print("No workout loaded.")
+        return False
+    print(f"{wm.name}")
+    for exercise in wm.exercises:
+        print(f"{exercise.print_exercise()}")
+    return True
+
+def yn_query(question):
+    # General query prompt. Asks for Y/N response, and returns true/false. Loops until valid input
+    while True:
+        selection = input(f"{question} [Y/N]: ")
+        if selection.lower() == "y":
+            return True
+        elif selection.lower() == "n":
+            return False
+        else:
+            print("Invalid input.\n")
+
+def rename_query(wm):
+    if not wm.loaded:
+        new_name = input("Enter workout name: ")
+    else:
+        new_name = input("Enter new workout name: ")
+        if new_name == "":
+            new_name = wm.name
+    if new_name == "":
+        new_name = "Untitled"
+    wm.name = new_name
+
+# ----------------------------------------------------------------------------------
+
+
+
+# MENU OPTIONS ----------------------------------------------------------------------
+
+# [1] New Workout
+def new_workout(wm):
+    if not wm.loaded:
+        wm.new_workout()
+        rename_query(wm)
+        return
+    else:
+        print(f"{wm.name} currently loaded. ")
+        selection = yn_query("Create new workout? Any changes to the current workout will be lost.")
+        if selection:
+            wm.new_workout()
+            rename_query(wm)
+            return
+        return
+
+# [2] Load Workout
 def load_workout(folder_path, wm):
     workout_list = fm.get_workout_list(folder_path)
-    current_workout = None
-    print("\nLOAD WORKOUT\n")
-    # CASE: Available workouts
     if workout_list:
         for index, item in enumerate(workout_list):
             print(f"[{index + 1}] {item[:-5]}")
@@ -56,6 +122,7 @@ def load_workout(folder_path, wm):
         else:
             print("Invalid selection.")
 
+# [3] Save Workout
 def save_workout(folder_path, wm):
     print("DEBUG: SAVING WORKOUT")
     workout_name = wm.name
@@ -67,23 +134,10 @@ def save_workout(folder_path, wm):
     formatted_workout = wm.export_workout()
     fm.write_workout(workout_name, folder_path, formatted_workout)
 
+# [4] Settings
 
-# UI OPTIONS ---------------------------------------------------
-def display_options():
-    print("[1] New workout")
-    print("[2] Load workout")
-    print("[3] Save workout")
-    print("[4] Settings")
-    print("[5] Exit")
-
-def print_workout(wm):
-    if not wm.loaded:
-        print("No workout loaded.")
-        return False
-    print(f"{wm.name}")
-    for exercise in wm.exercises:
-        print(f"{exercise.print_exercise()}")
-    return True
+# [5] Exit
+# ----------------------------------------------------------------------------------
 
 
 # def get_workouts(folder_path):
