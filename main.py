@@ -14,28 +14,15 @@ if __name__ == "__main__":
     time.sleep(0.2)
 
     settings = menu.load_settings()
+    # Load settings data to variables for easy access
     path = settings["folder_path"]
+    default_rest = settings["default_rest"]
 
     #menu.load_workout(path, wm)
-    default_rest = settings["default_rest"]
-    wm.new_workout()
-    wm.name = "TEST WORKOUT"
+    menu.load_workout(path, wm)
 
-    wm.add_exercise("test1", default_rest)
-    wm.exercises[0].add_set(10)
-    wm.exercises[0].add_set(20)
+    menu.print_workout(wm)
 
-    wm.add_exercise("test2", default_rest)
-    wm.exercises[1].add_set(10)
-    wm.exercises[1].add_set(20)
-
-    wm.add_exercise("test3", default_rest)
-    wm.exercises[2].add_set(10)
-    wm.exercises[2].add_set(20)
-
-    print(f"{wm.name}")
-    for exercise in wm.exercises:
-        print(f"{exercise.print_exercise()}")
 
     with open("testExercises.json", "w") as file:
         json.dump(wm.export_workout(), file, indent=4)

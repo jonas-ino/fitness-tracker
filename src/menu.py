@@ -28,9 +28,8 @@ def load_workout(folder_path, wm):
     print("\nLOAD WORKOUT\n")
     # CASE: Available workouts
     if workout_list:
-        for workout in workout_list:
-            for index, item in enumerate(workout_list):
-                print(f"[{index + 1}] {item[:-5]}")
+        for index, item in enumerate(workout_list):
+            print(f"[{index + 1}] {item[:-5]}")
     print("[N] New workout")
     selection = input("\nSelection: ")
     while True:
@@ -46,7 +45,7 @@ def load_workout(folder_path, wm):
                 print(f"Selected: {current_workout[:-5]}")                  #DEBUG
                 if fm.verify_workout(current_workout, folder_path):
                     workout = fm.read_workout(current_workout, folder_path)
-                    wm.import_workout(workout)
+                    wm.load_workout(workout)
                     break
                 else:
                     print("ERROR: WORKOUT NOT FOUND [menu.load_workout]")   #DEBUG
@@ -61,7 +60,22 @@ def save_workout(folder_path, wm):
     print("TEMP")
 
 
+# UI OPTIONS ---------------------------------------------------
+def display_options():
+    print("[1] New workout")
+    print("[2] Load workout")
+    print("[3] Save workout")
+    print("[4] Settings")
+    print("[5] Exit")
 
+def print_workout(wm):
+    if not wm.loaded:
+        print("No workout loaded.")
+        return False
+    print(f"{wm.name}")
+    for exercise in wm.exercises:
+        print(f"{exercise.print_exercise()}")
+    return True
 
 
 # def get_workouts(folder_path):

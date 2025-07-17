@@ -17,17 +17,37 @@ class WorkoutManager:
     def __init__(self):
         self.name = ""
         self.exercises = []
+        self.loaded = False
 
     def clear_workout(self):
         self.exercises.clear()
+        self.loaded = False
 
     def new_workout(self):
         self.name = ""
         self.clear_workout()
+        self.loaded = True
+
+    def load_workout(self, data):
+        self.loaded = True
+        self.name = data["workout_name"]
+        formatted_exercises = data["exercises"]
+        for ex in formatted_exercises:
+            temp_name = ex["exercise_name"]
+            temp_rest = ex["rest_timer"]
+            temp_set_data = ex["set_data"]
+            temp_exercise = Exercise(temp_name, temp_rest)
+            for temp_set in temp_set_data:
+                temp_exercise.load_set(temp_set["weight"], temp_set["prev_weight"])
+            self.exercises.append(temp_exercise)
 
     def add_exercise(self, name, rest_timer):
         new_exercise = Exercise(name, rest_timer)
         self.exercises.append(new_exercise)
+
+    # ADD SET - MENU
+    # REMOVE SET - MENU
+    # EDIT SET - MENU
 
     def remove_exercise(self, index):
         if not self.exercises:
@@ -58,11 +78,8 @@ class WorkoutManager:
             return None
 
     # def start_workout(self):
-    #
-    #
     # def import_workout(self, data):
-    #
-    #
+
     def export_workout(self):
         formatted_exercises = []
         for exercise in self.exercises:

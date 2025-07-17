@@ -20,8 +20,15 @@ class Exercise:
 
     def add_set(self, weight):
         new_set = {
-            "weight": weight,
+            "weight": int(weight),
             "prev_weight": 0
+        }
+        self.set_data.append(new_set)
+
+    def load_set(self, weight, prev_weight):
+        new_set = {
+            "weight": int(weight),
+            "prev_weight": int(prev_weight)
         }
         self.set_data.append(new_set)
 
@@ -86,7 +93,7 @@ class Exercise:
     def format_exercise(self):
         # for writing to file
         exercise = {
-            "name": self.name,
+            "exercise_name": self.name,
             "rest_timer": self.rest_timer,
             "set_data": self.set_data
         }
