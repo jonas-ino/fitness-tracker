@@ -10,7 +10,6 @@ def default_settings():
     return settings
 def read_settings():
     # Loads settings.json file, updating only specific keys. If these do not exist, uses default values
-    # TODO: Change to absolute path relative to script file before compilation
     settings = default_settings()
     try:
         with open("settings.json", "r") as file:
@@ -36,7 +35,6 @@ def verify_folder(folder_path):
         return False
 
 def verify_workout(workout_name, folder_path):
-    # TODO: Fix error case: .json file is present, but empty
     if verify_folder(folder_path):
         file_path = folder_path + "/" + workout_name
         if os.path.exists(file_path):
@@ -56,12 +54,15 @@ def read_workout(file_name, folder_path):
     if verify_workout(file_name, folder_path):
         with open(folder_path + "/" + file_name, "r") as file:
             workout = json.load(file)
+            workout["file_name"] = file_name
             return workout
     else:
         print(f"{folder_path}/{file_name} not found.")
         return None
 
 def write_workout(file_name, folder_path, workout):
+    if file_name != workout["file_name"]:
+        print()
     with open(folder_path + "/" + file_name, "w") as file:
         json.dump(workout, file, indent=4)
 # --------------------------------------------------------------------------------

@@ -87,7 +87,7 @@ class Exercise:
         else:
             output += str(weights[0]) + "kg : "
 
-        output += str(self.rest_timer) + "sec"
+        output += str(self.rest_timer) + "s Rest"
         return output
 
     def format_exercise(self):
@@ -98,4 +98,14 @@ class Exercise:
             "set_data": self.set_data
         }
         return exercise
+
+    def print_sets(self):
+        if not self.set_data:
+            return None
+        output = ""
+        for index, set in enumerate(self.set_data):
+            output += f"[{index + 1}] {set['weight']}kg (prev. {set['prev_weight']}kg)"
+            if index != len(self.set_data) - 1:
+                output += "\n"
+        return output
 
