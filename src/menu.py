@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import filedialog
 
@@ -216,6 +217,7 @@ def load_workout(folder_path, wm):
 # [3] Save Workout
 def save_workout(folder_path, wm):
     workout_name = wm.name
+    workout_name = workout_name.strip().replace(" ", "_").lower()
     if workout_name == "" or workout_name is None:
         workout_name = "untitled"
         wm.name = workout_name
@@ -225,7 +227,13 @@ def save_workout(folder_path, wm):
 
     # DELETE OLD FILE
     if workout_name != wm.file_name:
-        print(f"TODO: DELETE {wm.file_name}")
+        old_file_path = folder_path + "/" + wm.file_name
+        if os.path.exists(old_file_path):
+            print(f"Overwriting {wm.file_name} with {workout_name}...")
+            try:
+                os.remove(old_file_path)
+            except OSError:
+                print("ERROR: Could not delete old file.")
 
     fm.write_workout(workout_name, folder_path, formatted_workout)
 
@@ -301,13 +309,11 @@ def wo_rename_workout(wm):
 def ex_add(wm, exercise):
     # Adds a new set with user-defined weight
     while True:
+        print(exercise.name)
+        print(exercise.print_sets())
         ex_weight = input("Enter exercise weight (Q to quit): ")
         if ex_weight.isdigit():
-            if int(ex_weight) >= 0:
-                exercise.add_set(ex_weight)
-                break
-            else:
-                print("Exercise weight cannot be negative.")
+            exercise.add_set(ex_weight)
         elif ex_weight.lower() == "q":
             break
         else:
@@ -316,10 +322,12 @@ def ex_add(wm, exercise):
 # [2] Remove set
 def ex_remove(exercise):
     # Removes a user-selected set from the specified exercise
-    print(exercise.print_sets())
     while True:
-        if not exercise.set_data:
-            print("No sets to remove.")
+        if exercise.set_data:
+            print(exercise.name)
+            print(exercise.print_sets())
+        else:
+            print("Exercise has no sets.")
             break
         selection = list_query("Select set to remove (Q to quit): ", exercise.set_data)
         if selection.lower() == "q":
@@ -333,7 +341,28 @@ def ex_remove(exercise):
 
 # [3] Change weight
 def ex_edit_weight(exercise):
-    print("Selected: Change set")
+    # Allows the user to edit the weight of an exercise (does not affect previous weight)
+    while True:
+        if exercise.set_data:
+            print(exercise.name)
+            print(exercise.print_sets())
+        else:
+            print("Exercise has no sets.")
+            break
+        selection = list_query("Select set to edit (Q to quit): ", exercise.set_data)
+        if selection.lower() == "q":
+            break
+        else:
+            while True:
+                new_weight = input("Enter new weight (Q to quit): ")
+                if new_weight.isdigit():
+                    exercise.edit_set_weight(int(selection) - 1, new_weight)
+                    break
+                elif new_weight.lower() == "q":
+                    break
+                else:
+                    print("Invalid input.")
+            break
 
 # [4] rename exercise
 def ex_rename_exercise(exercise):

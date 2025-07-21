@@ -12,6 +12,8 @@ from src.workout_manager import WorkoutManager
 #TODO: [fm.verify_workout] Fix error case: .json file is present, but empty
 #   Can just use the same logic as with loading settings
 
+#Could also change loops into STATES. Performing an action changes the state of the program
+
 if __name__ == "__main__":
 
     # Load settings from settings.json file
@@ -27,19 +29,24 @@ if __name__ == "__main__":
         menu.display_options(wm)
         option = input("\nSelect an option (Q to quit): ")
 
-        if option == "1": #------------------------- New Workout
+        if option == "1": #------------------------- ROOT[1] New Workout
             print("Selected: New Workout")
             menu.new_workout(wm)
-        elif option == "2": #----------------------- Load Workout
+        elif option == "2": #----------------------- ROOT[2] Load Workout
             print("Selected: Load Workout")
             menu.load_workout(path, wm)
-        elif option == "3": #----------------------- Save Workout
+        elif option == "3": #----------------------- ROOT[3] Save Workout
             print("Selected: Save Workout")
             menu.save_workout(path, wm)
-        elif option == "4": #----------------------- Settings                           #TODO
+        elif option == "4": #----------------------- ROOT[4] Settings      #TODO
             print("Selected: Settings")
+            print("Settings haven't been implemented yet...")
         elif option.lower() == "q": #--------------- Exit
             print("Exiting...")
+            if wm.loaded:
+                selection = menu.yn_query("Save changes?")
+                if selection:
+                    menu.save_workout(path, wm)
             break
             # Ask to save workout
         elif option == "0" and wm.loaded: #----------- View workout
@@ -55,31 +62,45 @@ if __name__ == "__main__":
                 elif option == "2": # -----( VIEW WORKOUT [2] )----- Add exercise
                     print("\nSelected: Add exercise")
                     menu.wo_add_exercise(wm)
-                elif option == "3": # -----( VIEW WORKOUT [3] )----- Edit exercise      TODO
+                elif option == "3": # -----( VIEW WORKOUT [3] )----- Edit exercise
                     print("\nSelected: Edit exercise")
                     while True:
                         # SELECT EXERCISE FROM QUERY LIST
+                        print()
                         menu.list_exercises(wm)
+                        print()
                         selected_exercise = menu.select_exercise(wm)
-
+                        if selected_exercise:
+                            print(selected_exercise.print_exercise()
+)
                         # SHOW OPTIONS
                         menu.exercise_options()
                         selection = input("\nSelect an option (Q to quit): ")
-                        if selection == "1":     # [1] Add set
+                        # TODO: LOOP UNTIL CANCEL (repeatedly add set, etc.)
+                        if selection == "1":     # ------------------------- EDIT[1] Add set
                             print("Selected: Add set")
                             menu.ex_add(wm, selected_exercise)
-                        elif selection == "2":  # [2] Remove set
+                        elif selection == "2":  # -------------------------- EDIT[2] Remove set
                             print("Selected: Remove set")
                             # QUERY WHICH SET (break if no exercises)
                             # TRY REMOVE SET
                             menu.ex_remove(selected_exercise)
-                        elif selection == "3":  # [3] Edit weight           #TODO
+                        elif selection == "3":  # -------------------------- EDIT[3] Edit weight
                             print("Selected: Edit weight")
                             # QUERY WHICH SET (break if no exercises)
-                            menu.ex_edit_weight(wm)
-                        elif selection == "4":  # [4] Rename exercise       #TODO
+                            menu.ex_edit_weight(selected_exercise)
+                        elif selection == "4":  # -------------------------- EDIT[4] Rename exercise
                             print("Selected: Rename exercise")
-                        elif selection == "5":  # [5] Add comment           #TODO
+                            new_name = input("Enter new exercise name (Q to quit): ")
+                            if new_name.lower() == "q":
+                                break
+                            if new_name == "":
+                                new_name = selected_exercise.name
+                                if new_name == "":
+                                    new_name = "Untitled"
+                            selected_exercise.name = new_name
+                            break
+                        elif selection == "5":  # ------------------------- EDIT[5] Add comment           #TODO
                             print("Selected: Add comment")
                             print("Comments haven't been implemented yet...")
                             break

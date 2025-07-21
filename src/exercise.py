@@ -43,6 +43,17 @@ class Exercise:
             print("ERROR: Invalid index")                               #DEBUG
             return False
 
+    def edit_set_weight(self, index, weight):
+        if not self.set_data:
+            print("ERROR: No sets found")
+            return False
+        try:
+            self.set_data[index]["weight"] = weight
+            return True
+        except IndexError:
+            print("ERROR: Invalid index")
+            return False
+
     def set_weight(self, index, weight):
         # SHOULD NOT UPDATE PREVIOUS WEIGHT. THIS WILL BE HANDLED BY THE WORKOUT MANAGER WHEN IT LOADS A NEW WORKOUT
         if not self.set_data:
@@ -101,7 +112,7 @@ class Exercise:
 
     def print_sets(self):
         if not self.set_data:
-            return None
+            return "No sets."
         output = ""
         for index, set in enumerate(self.set_data):
             output += f"[{index + 1}] {set['weight']}kg (prev. {set['prev_weight']}kg)"
